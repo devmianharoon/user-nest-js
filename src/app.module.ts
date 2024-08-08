@@ -22,7 +22,7 @@ import { User } from './users/data/user.entity';
         username: configService.get('DATABASE_USER'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: [User],
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: configService.get<boolean>('DATABASE_SYNC'),
         logging : true,
       }),

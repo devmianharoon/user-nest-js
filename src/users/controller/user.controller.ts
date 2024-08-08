@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
-import { UserDto } from '../data/user.dto';
+import { LoginDto, UserDto } from '../data/user.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -32,7 +32,7 @@ export class UserController {
   }
   // login
   @Post("login")
-  async login(@Body() loginDto: { email: string; password: string }){
+  async login(@Body() loginDto: LoginDto,){
     const { email, password } = loginDto;
     const user = await this.userService.validateUser(email, password);
 

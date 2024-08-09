@@ -4,12 +4,14 @@ import { User } from '../data/user.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from '../data/user.dto';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private jwtService : JwtService    //jwt from nestjs/jwt
   ) {}
 
   // create User
@@ -54,8 +56,16 @@ export class UserService {
       where: { email },
     });
     if (user && await bcrypt.compare(password,user.password)){
-        return user
+      const payload = { username: user.name, sub: user.id }
+      const accessToken = this.jwtService.sign(payload)
+      return accessToken
+      // {
+        // user,
+        // accessToken,
+      // };
     }
     return null
   }
+
+  // jwt 
 }

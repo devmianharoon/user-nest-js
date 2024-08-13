@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../services/user.service';
 import { LoginDto, UserDto } from '../data/user.dto';
+import {AuthGuard} from '../user.guard'
 
 @ApiTags('user')
 @Controller('user')
@@ -11,6 +12,7 @@ export class UserController {
   async createUser(@Body() createUserDto: UserDto) {
     return this.userService.createUser(createUserDto);
   }
+  @UseGuards(AuthGuard)
   @Get()
   async getUser(){
     return this.userService.getUser()

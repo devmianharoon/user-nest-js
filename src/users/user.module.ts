@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './data/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-
+import { jwtConstants } from './constants';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -16,7 +16,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
+        secret: jwtConstants.secret,   //import from constants rather then env
         signOptions: { expiresIn: '60m' },
       }),
       inject: [ConfigService],

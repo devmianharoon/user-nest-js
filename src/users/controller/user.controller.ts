@@ -41,7 +41,6 @@ export class UserController {
     if (!user) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
-
     return { message: 'Login successfully', user };
   }
 }
